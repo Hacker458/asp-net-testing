@@ -15,7 +15,7 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 Route::post('/processing', 'MainController@testsProcessing')->name('testsProcessing');
 

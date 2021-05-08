@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\FeedbackMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class MainController extends Controller
 {
@@ -20,16 +22,27 @@ class MainController extends Controller
     ];
 
     public function testsProcessing(Request $request) {
+        $name = $request->input('name');
+        $email = $request->input('email');
+
         $correct_answers = 0;
         foreach($request->all() as $key => $answer) {
-            if($key[0] != '_') {
-                if(self::ANSWER_KEYS[$key] && self::ANSWER_KEYS[$key] == $answer) {
-                    $correct_answers++;
-                }
+            $is_test_param = substr($key, 0, 4) == "test";
+            if($is_test_param && self::ANSWER_KEYS[$key] == $answer) {
+                $correct_answers++;
             }
         }
 
+        $status = $correct_answers >= 5;
+
+        if($email) {
+            Mail::to($email)->send(new FeedbackMail($name, $status, $correct_answers));
+        }
+
+
         return view('results', [
+            'name' => $name,
+            'status' => $status,
             'correct_answers' => $correct_answers
         ]);
     }

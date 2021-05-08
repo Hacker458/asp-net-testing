@@ -10,6 +10,18 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
+            <label for="name">Ваше Имя</label>
+            <input class="form-control w-50" type="text" id="name" name="name" required>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <label for="email">Email (опционально) </label>
+            <input class="form-control w-50" type="email" id="email" name="email">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
             <div class="d-flex">
                 <div class="my-3">
                     <h4 class="mb-3">1. Где обычно хранится идентификатор сессии пользователя?</h4>
